@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "music-service"
+version = "1.0.0"
+description = ""
+authors = ["Madeleine Lee <leemadeleine@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.28.1"
+fastapi = "^0.87.0"
+invoke = "^1.7.3"
+
+[tool.poetry.group.dev.dependencies]
+requests = "^2.28.1"
+fastapi = "^0.87.0"
+invoke = "^1.7.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
