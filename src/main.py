@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.routers import simple
+from src.routers import simple, auth
 from src.middleware import middleware
 
 
@@ -12,3 +12,4 @@ app = FastAPI(
 )
 
 app.include_router(simple.router)
+app.include_router(auth.router)

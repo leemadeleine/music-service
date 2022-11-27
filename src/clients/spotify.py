@@ -1,7 +1,11 @@
 import requests
+from requests.auth import HTTPBasicAuth
 import os
+import base64
+from urllib.parse import urlencode
 
 BASE_URI = "https://api.spotify.com"
+ACCOUNTS_BASE_URI = "https://accounts.spotify.com"
 client_id = os.environ["CLIENT_ID"]
 client_secret = os.environ["CLIENT_SECRET"]
 albums_token = os.environ["TOKEN_ALBUMS"]
@@ -13,8 +17,8 @@ class SpotifyClient:
     Spotify Client
     """
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, token) -> None:
+        self.token = token
 
     def get_my_albums(self) -> any:
         """
@@ -22,7 +26,7 @@ class SpotifyClient:
         """
         response = requests.get(
             BASE_URI + "/v1/me/albums",
-            headers={"Authorization": "Bearer " + albums_token},
+            headers={"Authorization": "Bearer " + self.token},
             timeout=10,
         )
         return response.json()
@@ -33,7 +37,44 @@ class SpotifyClient:
         """
         response = requests.get(
             BASE_URI + "/v1/me/playlists?limit=3",
-            headers={"Authorization": "Bearer " + playlists_token},
+            headers={"Authorization": "Bearer " + self.token},
+            timeout=10,
+        )
+        return response.json()
+
+    def get_playlists(self):
+        """
+        get maddie's playlists
+        """
+        uri = BASE_URI + "/v1/users/spotify/playlists?limit=50"
+        response = requests.get(
+            uri,
+            headers={"Authorization": "Bearer " + self.token},
+            timeout=10,
+        )
+        return response.json()
+
+
+    # Using the accounts API
+
+    def get_auth_token(self, code):
+        """
+        get auth token
+        """
+
+        uri = ACCOUNTS_BASE_URI + "/api/token"
+
+        response = requests.post(
+            uri,
+            data={
+                "grant_type": "client_credentials",
+                "code": code,
+                "redirect_uri": "http://localhost:3000",
+            },
+            auth=HTTPBasicAuth(client_id, client_secret),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
             timeout=10,
         )
         return response.json()
