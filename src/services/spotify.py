@@ -1,6 +1,7 @@
 import os
 
 from src.clients.spotify import SpotifyClient
+from src.services.mood_map import mood_map
 
 client_id = os.environ["CLIENT_ID"]
 client_secret = os.environ["CLIENT_SECRET"]
@@ -33,7 +34,9 @@ class SpotifyService:
         items = all_playlist_data["items"]
         cleaned_data = []
         for item in items:
-            cleaned_data.append({"uri": item["uri"], "src": item["external_urls"]["spotify"]})
+            cleaned_data.append(
+                {"uri": item["uri"], "src": item["external_urls"]["spotify"]}
+            )
 
         return cleaned_data
 
@@ -56,3 +59,10 @@ class SpotifyService:
         """
         auth = self.spotify_client.get_auth_token(self.code)
         return auth
+
+    def get_recommendations(self, mood):
+        """
+        get recs
+        """
+        recs = self.spotify_client.get_recommendations(query_params=mood_map[mood])
+        return recs

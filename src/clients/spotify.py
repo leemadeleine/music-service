@@ -1,7 +1,6 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import os
-import base64
 from urllib.parse import urlencode
 
 BASE_URI = "https://api.spotify.com"
@@ -54,6 +53,18 @@ class SpotifyClient:
         )
         return response.json()
 
+    def get_recommendations(self, query_params):
+        """
+        get recs based on params defined in mood_map.py
+        """
+        uri = BASE_URI + "/v1/recommendations?" + urlencode(query_params)
+        uri = uri.replace('%2C', ',')
+        response = requests.get(
+            uri,
+            headers={"Authorization": "Bearer " + self.token},
+            timeout=10,
+        )
+        return response.json()
 
     # Using the accounts API
 

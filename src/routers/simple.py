@@ -31,3 +31,12 @@ async def get_playlist_data(token: str = None):
     """
     spotify_service = SpotifyService(None, token)
     return {"data": spotify_service.get_playlists()}
+
+
+@router.get("/recommendations")
+async def get_recos(token: str = None, mood: str = None):
+    """
+    get recommendations based on set of inputs
+    """
+    spotify_service = SpotifyService(None, token)
+    return {"data": spotify_service.get_recommendations(mood)}
