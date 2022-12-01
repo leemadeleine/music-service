@@ -1,5 +1,5 @@
 """
-map moods to a set of query params
+map given mood strings to a set of query params used to fetch recommendations
 """
 mood_map = {
     "happy": {

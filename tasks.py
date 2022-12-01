@@ -1,5 +1,6 @@
 from invoke import task
 
+
 @task
 def run(c):
     """
@@ -7,4 +8,5 @@ def run(c):
     """
     c.run("uvicorn src.main:app --reload", pty=True)
 
-#TODO: add auto formatting
+
+# TODO: add auto formatting

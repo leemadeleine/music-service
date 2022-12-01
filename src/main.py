@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.routers import simple, auth
+from src.routers import recommendations, auth
 from src.middleware import middleware
 
 
@@ -8,8 +8,8 @@ app = FastAPI(
     description="",
     version="1.0.0",
     contact={"name": "Client", "url": "http://localhost:3000"},
-    middleware=middleware
+    middleware=middleware,
 )
 
-app.include_router(simple.router)
+app.include_router(recommendations.router)
 app.include_router(auth.router)
